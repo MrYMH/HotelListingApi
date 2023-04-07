@@ -1,6 +1,7 @@
 ﻿namespace HotelHostingApi.Models.Country
 {
-    public class CreateCountryDto
+    public class CreateCountryDto : BaseCountry
     {
+
     }
 }
