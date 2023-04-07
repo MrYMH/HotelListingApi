@@ -46,6 +46,7 @@ namespace HotelHostingApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCountry(int id, Country country)
         {
+
             if (id != country.Id)
             {
                 return BadRequest();
