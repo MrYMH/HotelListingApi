@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelHostingApi.Data;
-using HotelHostingApi.Models.Country;
 using AutoMapper;
+using HotelLisstingApi.Core.Dtos.Country;
+using HotelLisstingApi.Core.Models;
 
 namespace HotelHostingApi.Controllers
 {

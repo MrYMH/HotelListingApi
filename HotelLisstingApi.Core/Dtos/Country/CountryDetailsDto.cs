@@ -1,7 +1,6 @@
-﻿using HotelHostingApi.Data;
-using HotelHostingApi.Models.Hotel;
+﻿using HotelLisstingApi.Core.Dtos.Hotel;
 
-namespace HotelHostingApi.Models.Country
+namespace HotelLisstingApi.Core.Dtos.Country
 {
     public class CountryDetailsDto : BaseCountry
     {

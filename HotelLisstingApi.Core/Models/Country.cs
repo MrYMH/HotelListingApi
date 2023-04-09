@@ -1,4 +1,4 @@
-﻿namespace HotelHostingApi.Data
+﻿namespace HotelLisstingApi.Core.Models
 {
     public class Country
     {

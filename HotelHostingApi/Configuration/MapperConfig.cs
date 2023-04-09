@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using HotelHostingApi.Data;
-using HotelHostingApi.Models.Country;
-using HotelHostingApi.Models.Hotel;
+using HotelLisstingApi.Core.Dtos.Country;
+using HotelLisstingApi.Core.Dtos.Hotel;
+using HotelLisstingApi.Core.Models;
 
 namespace HotelHostingApi.Configuration
 {
