@@ -51,15 +51,20 @@ namespace HotelHostingApi.Controllers
         // PUT: api/Countries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCountry(int id, Country country)
+        public async Task<IActionResult> PutCountry(int id, CountryDetailsDto countryDto)
         {
 
-            if (id != country.Id)
+            if (id != countryDto.Id)
+            {
+                return BadRequest();
+            }
+            var country = _context.Countries.FirstOrDefault(c => c.Id == id);
+            if (country == null)
             {
                 return BadRequest();
             }
 
-            _context.Entry(country).State = EntityState.Modified;
+            mapper.Map(countryDto, country);
 
             try
             {
