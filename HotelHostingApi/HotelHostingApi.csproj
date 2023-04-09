@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HotelLisstingApi.Core\HotelLisstingApi.Core.csproj" />
+    <ProjectReference Include="..\HotelListingApi.EF\HotelListingApi.EF.csproj" />
   </ItemGroup>
 
 </Project>

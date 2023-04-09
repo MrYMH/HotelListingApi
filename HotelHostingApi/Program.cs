@@ -1,6 +1,6 @@
 
 using HotelHostingApi.Configuration;
-using HotelHostingApi.Data;
+using HotelHostingApi.EF.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 

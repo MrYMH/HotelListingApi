@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HotelHostingApi.Data;
+//using HotelHostingApi.Data;
 using AutoMapper;
 using HotelLisstingApi.Core.Dtos.Country;
 using HotelLisstingApi.Core.Models;
+using HotelHostingApi.EF.Data;
 
 namespace HotelHostingApi.Controllers
 {

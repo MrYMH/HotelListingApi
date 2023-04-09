@@ -4,10 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelHostingApi", "HotelHostingApi\HotelHostingApi.csproj", "{639887F9-0AD1-4AAA-9722-B7BEC23DFC8D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1B7C6A65-0666-4DA6-A648-5844E404316C} = {1B7C6A65-0666-4DA6-A648-5844E404316C}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelLisstingApi.Core", "HotelLisstingApi.Core\HotelLisstingApi.Core.csproj", "{2962D97A-FA66-4D57-822A-1C44108B2909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelLisstingApi.Core", "HotelLisstingApi.Core\HotelLisstingApi.Core.csproj", "{2962D97A-FA66-4D57-822A-1C44108B2909}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelListingApi.EF", "HotelListingApi.EF\HotelListingApi.EF.csproj", "{1B7C6A65-0666-4DA6-A648-5844E404316C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelListingApi.EF", "HotelListingApi.EF\HotelListingApi.EF.csproj", "{1B7C6A65-0666-4DA6-A648-5844E404316C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
