@@ -1,6 +1,12 @@
-﻿namespace HotelHostingApi.Models.Country
+﻿using HotelHostingApi.Data;
+using HotelHostingApi.Models.Hotel;
+
+namespace HotelHostingApi.Models.Country
 {
-    public class GetCountryDetails
+    public class CountryDetailsDto : BaseCountry
     {
+        public int Id { get; set; }
+       
+        public virtual IList<HotelDetailsDto> Hotels { get; set; }
     }
 }
