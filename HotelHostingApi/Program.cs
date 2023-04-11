@@ -1,6 +1,8 @@
 
 using HotelHostingApi.Configuration;
 using HotelHostingApi.EF.Data;
+using HotelLisstingApi.Core.IRepositories;
+using HotelListingApi.EF.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -44,6 +46,8 @@ namespace HotelHostingApi
             //AutoMapper setting
             builder.Services.AddAutoMapper(typeof(MapperConfig));
 
+            //set repository pattern
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 

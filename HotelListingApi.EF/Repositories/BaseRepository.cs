@@ -53,15 +53,7 @@ namespace HotelListingApi.EF.Repositories
             return await _context.Set<T>().FirstOrDefaultAsync(cond);
         }
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-
-        public async Task SaveAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
+        
 
         public async Task UpdateAsync(T entity)
         {

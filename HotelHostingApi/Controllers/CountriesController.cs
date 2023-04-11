@@ -10,6 +10,7 @@ using AutoMapper;
 using HotelLisstingApi.Core.Dtos.Country;
 using HotelLisstingApi.Core.Models;
 using HotelHostingApi.EF.Data;
+using HotelLisstingApi.Core.IRepositories;
 
 namespace HotelHostingApi.Controllers
 {
@@ -18,19 +19,19 @@ namespace HotelHostingApi.Controllers
     public class CountriesController : ControllerBase
     {
         private readonly IMapper mapper;
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CountriesController(IMapper mapper , ApplicationDbContext context)
+        public CountriesController(IMapper mapper , IUnitOfWork unitOfWork )
         {
             this.mapper = mapper;
-            _context = context;
+            this._unitOfWork = unitOfWork;
         }
 
         // GET: api/Countries
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetCountries()
         {
-            var countries =  await _context.Countries.ToListAsync();
+            var countries =  await _unitOfWork.Country.GetAllAsync();
             var records = mapper.Map<List<GetCountryDto>>(countries);
             return records ;
         }
