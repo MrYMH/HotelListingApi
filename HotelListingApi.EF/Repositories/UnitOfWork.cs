@@ -14,12 +14,14 @@ namespace HotelListingApi.EF.Repositories
         private readonly ApplicationDbContext _context;
 
         public ICountryRepository Country { get; private set; }
+        public IHotelRepository Hotel { get; private set; }
 
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Country = new CountryRepository(_context);
+            Hotel = new HotelRepository(_context);
         }
 
 
