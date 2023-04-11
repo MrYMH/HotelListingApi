@@ -90,7 +90,7 @@ namespace HotelListingApi.EF.Repositories
 
         
 
-        public async Task UpdateAsync(T entity)
+        public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
         }

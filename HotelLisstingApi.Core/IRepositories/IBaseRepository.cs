@@ -12,7 +12,7 @@ namespace HotelLisstingApi.Core.IRepositories
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeprops = null);
         public Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter, string? includeprops = null);
         public Task<T> GetFirstAsync(Expression<Func<T, bool>> filter = null, string? includeprops = null);
-        public Task UpdateAsync(T entity);
+        public void Update(T entity);
         public void Delete(T entity);
         public Task AddAsync(T entity);
 

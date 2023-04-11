@@ -60,7 +60,7 @@ namespace HotelHostingApi.Controllers
             {
                 return BadRequest();
             }
-            var country = _unitOfWork.Country.GetFirstAsync(c => c.Id == id);
+            var country = await _unitOfWork.Country.GetFirstAsync(c => c.Id == id);
             if (country == null)
             {
                 return BadRequest();
@@ -70,6 +70,8 @@ namespace HotelHostingApi.Controllers
 
             try
             {
+                //await _countriesRepository.UpdateAsync(country);
+                _unitOfWork.Country.Update(country);
                 await _unitOfWork.SaveAsync();
             }
             catch (DbUpdateConcurrencyException)
