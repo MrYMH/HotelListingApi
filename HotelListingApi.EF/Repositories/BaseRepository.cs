@@ -94,5 +94,17 @@ namespace HotelListingApi.EF.Repositories
         {
             _context.Set<T>().Update(entity);
         }
+
+
+        public bool Exists(int id)
+        {
+            var entity = Get(id);
+            return entity != null;
+        }
+
+        private T Get(int id)
+        {
+            return _context.Set<T>().Find(id);
+        }
     }
 }
