@@ -16,5 +16,9 @@ namespace HotelLisstingApi.Core.Dtos.Hotel
 
         [Required]
         public double Rating { get; set; }
+
+        [Required]
+        [Range(1, int.MaxValue)]
+        public int CountryId { get; set; }
     }
 }

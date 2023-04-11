@@ -97,7 +97,7 @@ namespace HotelHostingApi.Controllers
 
             await _unitOfWork.SaveAsync();
 
-            return CreatedAtAction("GetCountry", new { id = hotel.Id }, hotel);
+            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
         }
 
         // DELETE: api/Hotels/5
