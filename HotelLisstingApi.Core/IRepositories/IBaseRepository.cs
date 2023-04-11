@@ -15,7 +15,8 @@ namespace HotelLisstingApi.Core.IRepositories
         public Task UpdateAsync(T entity);
         public void Delete(T entity);
         public Task AddAsync(T entity);
-        
+
+        bool Exists(int id);
 
     }
 }
