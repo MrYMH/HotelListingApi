@@ -39,7 +39,7 @@ namespace HotelHostingApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CountryDetailsDto>> GetCountry(int? id)
         {
-            var country = await _unitOfWork.Country.GetFirstAsync(c=>c.Id == id ,"Hotel");
+            var country = await _unitOfWork.Country.GetFirstAsync(c=>c.Id == id ,"Hotels");
 
             if (country == null)
             {
