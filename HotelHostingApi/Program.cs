@@ -1,5 +1,6 @@
 
-using HotelHostingApi.Data;
+using HotelHostingApi.Configuration;
+using HotelHostingApi.EF.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -39,6 +40,9 @@ namespace HotelHostingApi
                 LoggerConfiguration.WriteTo.Console()
                 .ReadFrom.Configuration(builder.Configuration)
              );
+
+            //AutoMapper setting
+            builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 
             var app = builder.Build();

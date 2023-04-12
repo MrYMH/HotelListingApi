@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotelLisstingApi.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace HotelHostingApi.Data
+namespace HotelHostingApi.EF.Data
 {
     public class ApplicationDbContext : DbContext
     {
