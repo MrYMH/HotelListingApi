@@ -1,4 +1,5 @@
 ﻿using HotelLisstingApi.Core.Models;
+using HotelListingApi.EF.Configurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,9 @@ namespace HotelHostingApi.EF.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+
             modelBuilder.Entity<Country>().HasData(
                 new Country
                 {
