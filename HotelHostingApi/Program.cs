@@ -56,6 +56,8 @@ namespace HotelHostingApi
             //set repository pattern
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            builder.Services.AddScoped<IAuthManager, AuthManager>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

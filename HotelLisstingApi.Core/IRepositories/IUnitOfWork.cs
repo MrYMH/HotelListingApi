@@ -11,6 +11,7 @@ namespace HotelLisstingApi.Core.IRepositories
         //props = tables
         ICountryRepository Country { get; }
         IHotelRepository Hotel { get; }
+        //IAuthManager User { get; }
 
 
         //methods
