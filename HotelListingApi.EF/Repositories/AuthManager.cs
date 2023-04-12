@@ -23,7 +23,7 @@ namespace HotelListingApi.EF.Repositories
             _userManager = userManager;
         }
 
-        public Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto)
+        public async Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto)
         {
             _user = _mapper.Map<ApiUser>(userDto);
             _user.UserName = userDto.Email;
