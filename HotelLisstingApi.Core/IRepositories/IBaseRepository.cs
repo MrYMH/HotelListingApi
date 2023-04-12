@@ -9,14 +9,14 @@ namespace HotelLisstingApi.Core.IRepositories
 {
     public interface IBaseRepository<T> where T : class
     {
-        public IEnumerable<T> GetAll();
-        public Task<IEnumerable<T>> GetAllAsync();
-        public Task<T> GetFirstAsync(Expression<Func<T, bool>> cond, string[] includeprops = null);
-        public Task UpdateAsync(T entity);
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeprops = null);
+        public Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter, string? includeprops = null);
+        public Task<T> GetFirstAsync(Expression<Func<T, bool>> filter = null, string? includeprops = null);
+        public void Update(T entity);
         public void Delete(T entity);
         public Task AddAsync(T entity);
-        public Task SaveAsync();
-        public void Save();
+
+        bool Exists(int id);
 
     }
 }

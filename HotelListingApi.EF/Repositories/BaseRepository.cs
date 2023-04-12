@@ -32,15 +32,41 @@ namespace HotelListingApi.EF.Repositories
             _context.Set<T>().Remove(entity);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeprops = null)
         {
-            return _context.Set<T>().ToList();
+            IQueryable<T> query = _context.Set<T>().AsQueryable();
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (includeprops != null)
+            {
+                foreach (var includeProp in includeprops.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return query.ToList();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeprops = null)
         {
 
-            return await _context.Set<T>().ToListAsync();
+            IQueryable<T> query = _context.Set<T>().AsQueryable();
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (includeprops != null)
+            {
+                foreach (var includeProp in includeprops.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return await query.ToListAsync();
         }
 
         //public Task<T> GetFirstAsync(int id)
@@ -48,24 +74,37 @@ namespace HotelListingApi.EF.Repositories
         //    throw new NotImplementedException();
         //}
 
-        public async Task<T> GetFirstAsync(Expression<Func<T,bool>> cond, string[] includeprops)
+        public async Task<T> GetFirstAsync(Expression<Func<T, bool>> filter, string? includeprops = null)
         {
-            return await _context.Set<T>().FirstOrDefaultAsync(cond);
+            
+             var dbset = _context.Set<T>().Where(filter);
+            if (includeprops != null)
+            {
+                foreach (var includeProp in includeprops.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    dbset = dbset.Include(includeProp);
+                }
+            }
+            return await dbset.FirstOrDefaultAsync();
         }
 
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
+        
 
-        public async Task SaveAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(T entity)
+        public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
+        }
+
+
+        public bool Exists(int id)
+        {
+            var entity = Get(id);
+            return entity != null;
+        }
+
+        private T Get(int id)
+        {
+            return _context.Set<T>().Find(id);
         }
     }
 }
