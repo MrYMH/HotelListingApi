@@ -38,7 +38,7 @@ namespace HotelListingApi.EF.Repositories
             return result.Errors;
         }
 
-        public async Task<string> Login(LoginUserDto loginDto)
+        public async Task<AuthResponseDto> Login(LoginUserDto loginDto)
         {
             _user = await _userManager.FindByEmailAsync(loginDto.Email);
             bool isValidUser = await _userManager.CheckPasswordAsync(_user, loginDto.Password);
@@ -48,13 +48,18 @@ namespace HotelListingApi.EF.Repositories
                 return null;
             }
 
-            //var token = await GenerateToken();
-            //return new AuthResponseDto
-            //{
-            //    Token = token,
-            //    UserId = _user.Id
-            //};
-            return "ok";
+            var token = await GenerateToken();
+            return new AuthResponseDto
+            {
+                Token = token,
+                UserId = _user.Id
+            };
+
+        }
+
+        private Task<string> GenerateToken()
+        {
+            throw new NotImplementedException();
         }
     }
 }
