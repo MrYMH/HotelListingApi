@@ -37,5 +37,7 @@ namespace HotelHostingApi.Controllers
 
             return Ok();
         }
+
+
     }
 }
