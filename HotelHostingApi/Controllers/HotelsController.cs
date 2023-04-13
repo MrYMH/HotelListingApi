@@ -3,6 +3,7 @@ using HotelLisstingApi.Core.Dtos.Country;
 using HotelLisstingApi.Core.Dtos.Hotel;
 using HotelLisstingApi.Core.IRepositories;
 using HotelLisstingApi.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace HotelHostingApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class HotelsController : ControllerBase
     {
@@ -49,6 +51,7 @@ namespace HotelHostingApi.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutHotel(int id, HotelDetailsDto hotelDto)
         {
 
@@ -88,6 +91,7 @@ namespace HotelHostingApi.Controllers
         // POST: api/Hotels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Hotel>> PostHotel(CreateHotelDto hotelDto)
         {
             var hotel = mapper.Map<Hotel>(hotelDto);
@@ -102,6 +106,7 @@ namespace HotelHostingApi.Controllers
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteHotel(int id)
         {
             var hotel = await _unitOfWork.Hotel.GetFirstAsync(c => c.Id == id);
