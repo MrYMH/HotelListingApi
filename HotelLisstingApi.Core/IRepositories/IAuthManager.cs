@@ -11,5 +11,6 @@ namespace HotelLisstingApi.Core.IRepositories
     public interface IAuthManager
     {
         Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto);
+        Task<string> Login(LoginUserDto userDto);
     }
 }

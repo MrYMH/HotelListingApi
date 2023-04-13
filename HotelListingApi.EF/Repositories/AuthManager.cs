@@ -37,5 +37,24 @@ namespace HotelListingApi.EF.Repositories
 
             return result.Errors;
         }
+
+        public async Task<string> Login(LoginUserDto loginDto)
+        {
+            _user = await _userManager.FindByEmailAsync(loginDto.Email);
+            bool isValidUser = await _userManager.CheckPasswordAsync(_user, loginDto.Password);
+
+            if (_user == null || isValidUser == false)
+            {
+                return null;
+            }
+
+            //var token = await GenerateToken();
+            //return new AuthResponseDto
+            //{
+            //    Token = token,
+            //    UserId = _user.Id
+            //};
+            return "ok";
+        }
     }
 }
