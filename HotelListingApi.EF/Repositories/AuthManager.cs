@@ -116,7 +116,8 @@ namespace HotelListingApi.EF.Repositories
                 return null;
             }
 
-            var isValidRefreshToken = await _userManager.VerifyUserTokenAsync(_user, _loginProvider, _refreshToken, request.RefreshToken);
+            var isValidRefreshToken = await _userManager.VerifyUserTokenAsync(_user,
+                _loginProvider, _refreshToken, request.RefreshToken);
 
             if (isValidRefreshToken)
             {
