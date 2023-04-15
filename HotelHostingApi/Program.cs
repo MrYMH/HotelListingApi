@@ -26,10 +26,10 @@ namespace HotelHostingApi
             });
 
             //setup user identity
-            builder.Services.AddIdentityCore<ApiUser>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            builder.Services.AddIdentity<ApiUser , IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>().AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+                
 
             
 
