@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace HotelHostingApi.Controllers
 {
     [Route("api/[controller]")]
-    
+    [ApiVersion("1.0", Deprecated = true)]
     [ApiController]
     public class HotelsController : ControllerBase
     {
