@@ -11,12 +11,14 @@ using HotelLisstingApi.Core.Models;
 using HotelHostingApi.EF.Data;
 using HotelLisstingApi.Core.IRepositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace HotelHostingApi.Controllers
 {
     [Route("api/v{version:apiVersion}/countries")]
     [ApiVersion("1.0", Deprecated = true)]
     [ApiController]
+    [EnableQuery]
     public class CountriesController : ControllerBase
     {
         private readonly IMapper mapper;

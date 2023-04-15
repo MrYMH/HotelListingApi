@@ -6,6 +6,7 @@ using HotelLisstingApi.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelHostingApi.Controllers
@@ -13,6 +14,7 @@ namespace HotelHostingApi.Controllers
     [Route("api/[controller]")]
     [ApiVersion("1.0", Deprecated = true)]
     [ApiController]
+    [EnableQuery]
     public class HotelsController : ControllerBase
     {
         private readonly IMapper mapper;
