@@ -17,5 +17,8 @@ namespace HotelLisstingApi.Core.IRepositories
         Task<string> CreateRefreshTocken();
 
         Task<AuthResponseDto> VerifyRefreshTocken(AuthResponseDto request);
+
+        //new implement
+        Task<AuthModel> RegisterAsync(ApiUserDto userDto);
     }
 }

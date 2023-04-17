@@ -1,6 +1,5 @@
 
 using HotelHostingApi.Configuration;
-using Microsoft.Extensions.Configuration;
 using HotelHostingApi.EF.Data;
 using HotelLisstingApi.Core.IRepositories;
 using HotelLisstingApi.Core.Models;

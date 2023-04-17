@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelHostingApi.Configuration;
 using HotelLisstingApi.Core.Dtos.User;
 using HotelLisstingApi.Core.IRepositories;
 using HotelLisstingApi.Core.Models;
@@ -21,15 +22,17 @@ namespace HotelListingApi.EF.Repositories
         private readonly UserManager<ApiUser> _userManager;
         private ApiUser _user;
         private readonly IConfiguration _config;
+        private readonly JwtConfig _jwtConfig;
 
         private const string _loginProvider = "HotelListingApi";
         private const string _refreshToken = "RefreshToken";
 
-        public AuthManager(IMapper mapper, UserManager<ApiUser> userManager , IConfiguration config)
+        public AuthManager(IMapper mapper, UserManager<ApiUser> userManager , IConfiguration config , JwtConfig jwtConfig )
         {
             _mapper = mapper;
             _userManager = userManager;
             _config = config;
+            _jwtConfig = jwtConfig;
         }
 
         public async Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto)
@@ -132,6 +135,11 @@ namespace HotelListingApi.EF.Repositories
 
             await _userManager.UpdateSecurityStampAsync(_user);
             return null;
+        }
+
+        public Task<AuthModel> RegisterAsync(ApiUserDto userDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }
