@@ -22,9 +22,10 @@ namespace HotelListingApi.EF.Repositories
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public BaseRepository(ApplicationDbContext context) 
+        public BaseRepository(ApplicationDbContext context , IMapper mapper) 
         {
             _context = context;
+            _mapper = mapper;
         }
 
 
@@ -134,9 +135,9 @@ namespace HotelListingApi.EF.Repositories
 
 
         //new implement
-        public async Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<T, bool>>? filter = null, string? includeprops = null)
+        public async Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<T, bool>> filter = null, string? includeprops = null)
         {
-            IQueryable<T> query = _context.Set<T>().AsQueryable();
+            var query = _context.Set<T>().AsQueryable();
             if (filter != null)
             {
                 query = query.Where(filter);
@@ -149,9 +150,8 @@ namespace HotelListingApi.EF.Repositories
                     query = query.Include(includeProp);
                 }
             }
-            return await query
-                .ProjectTo<TResult>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            var x = query.ProjectTo<TResult>(_mapper.ConfigurationProvider).ToList();
+            return x ;
         }
         public async Task<TResult> AddAsync<TSource, TResult>(TSource source)
         {
@@ -196,6 +196,14 @@ namespace HotelListingApi.EF.Repositories
 
         }
 
-        
+
+        public async Task<List<TResult>> GetAllAsync2<TResult>()
+        {
+            return await _context.Set<T>()
+                .ProjectTo<TResult>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
+
     }
 }

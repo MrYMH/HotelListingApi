@@ -1,4 +1,5 @@
-﻿using HotelHostingApi.EF.Data;
+﻿using AutoMapper;
+using HotelHostingApi.EF.Data;
 using HotelLisstingApi.Core.IRepositories;
 using HotelLisstingApi.Core.Models;
 using System;
@@ -12,9 +13,11 @@ namespace HotelListingApi.EF.Repositories
     public class HotelRepository : BaseRepository<Hotel>, IHotelRepository
     {
         private readonly ApplicationDbContext _context;
-        public HotelRepository(ApplicationDbContext context) : base(context)
+        private readonly IMapper _mapper;
+        public HotelRepository(ApplicationDbContext context , IMapper mapper) : base(context , mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
     }
 }

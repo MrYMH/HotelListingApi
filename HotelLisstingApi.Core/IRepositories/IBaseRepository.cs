@@ -27,5 +27,7 @@ namespace HotelLisstingApi.Core.IRepositories
         Task UpdateAsync<TSource>(int id, TSource source) where TSource : IBaseDto;
         public Task<TResult> AddAsync<TSource ,TResult>(TSource source);
 
+        Task<List<TResult>> GetAllAsync2<TResult>();
+
     }
 }
