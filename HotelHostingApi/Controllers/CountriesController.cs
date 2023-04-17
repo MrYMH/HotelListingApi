@@ -34,8 +34,7 @@ namespace HotelHostingApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetCountries()
         {
-            var countries =  await _unitOfWork.Country.GetAllAsync(null);
-            var records = mapper.Map<List<GetCountryDto>>(countries);
+            var records = await _unitOfWork.Country.GetAllAsync<GetCountryDto>();
             return records ;
         }
 
@@ -43,15 +42,8 @@ namespace HotelHostingApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CountryDetailsDto>> GetCountry(int? id)
         {
-            var country = await _unitOfWork.Country.GetFirstAsync(c=>c.Id == id ,"Hotels");
-
-            if (country == null)
-            {
-                return NotFound();
-            }
-            var countryDto = mapper.Map<CountryDetailsDto>(country);
-
-            return countryDto;
+            var records = await _unitOfWork.Country.GetFirstAsync<CountryDetailsDto>(c => c.Id == id, "Hotels");
+            return records;
         }
 
         // PUT: api/Countries/5
@@ -60,24 +52,9 @@ namespace HotelHostingApi.Controllers
         
         public async Task<IActionResult> PutCountry(int id, GetCountryDto countryDto)
         {
-
-            if (id != countryDto.Id)
-            {
-                return BadRequest();
-            }
-            var country = await _unitOfWork.Country.GetFirstAsync(c => c.Id == id);
-            if (country == null)
-            {
-                return BadRequest();
-            }
-
-            mapper.Map(countryDto, country);
-
             try
             {
-                //await _countriesRepository.UpdateAsync(country);
-                _unitOfWork.Country.Update(country);
-                await _unitOfWork.SaveAsync();
+                await _unitOfWork.Country.UpdateAsync<GetCountryDto>(id , countryDto);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -100,16 +77,10 @@ namespace HotelHostingApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         
-        public async Task<ActionResult<Country>> PostCountry(CreateCountryDto createCountryDto)
+        public async Task<ActionResult<GetCountryDto>> PostCountry(CreateCountryDto createCountryDto)
         {
-            var country = mapper.Map<Country>(createCountryDto);
-            // _context.Countries.Add(country);
-
-            _unitOfWork.Country.AddAsync(country);
-
-            await _unitOfWork.SaveAsync();
-
-            return CreatedAtAction("GetCountry", new { id = country.Id }, country);
+            var record = await _unitOfWork.Country.AddAsync<CreateCountryDto , GetCountryDto>(createCountryDto);
+            return CreatedAtAction(nameof(CreateCountryDto), new { id = record.Id }, record);
         }
 
 
@@ -134,7 +105,6 @@ namespace HotelHostingApi.Controllers
 
         private bool CountryExists(int id)
         {
-            //return _context.Countries.Any(e => e.Id == id);
             return _unitOfWork.Country.Exists(id);
         }
     }

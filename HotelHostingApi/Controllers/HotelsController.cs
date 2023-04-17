@@ -31,7 +31,6 @@ namespace HotelHostingApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelDetailsDto>>> GetHotels()
         {
-            //var hotels = await _unitOfWork.Hotel.GetAllAsync(null);
             var records = await _unitOfWork.Hotel.GetAllAsync<HotelDetailsDto>();
             return records;
         }
@@ -40,16 +39,6 @@ namespace HotelHostingApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<HotelDetailsDto>> GetHotel(int id)
         {
-            //var hotel = await _unitOfWork.Hotel.GetFirstAsync(c => c.Id == id);
-
-            //if (hotel == null)
-            //{
-            //    return NotFound();
-            //}
-            //var hotelDto = mapper.Map<HotelDetailsDto>(hotel);
-
-            //return hotelDto;
-
             var result = await _unitOfWork.Hotel.GetFirstAsync<HotelDetailsDto>(c => c.Id == id);
             return result;
         }
@@ -60,37 +49,6 @@ namespace HotelHostingApi.Controllers
         
         public async Task<IActionResult> PutHotel(int id, HotelDetailsDto hotelDto)
         {
-
-            //if (id != hotelDto.Id)
-            //{
-            //    return BadRequest();
-            //}
-            //var hotel = await _unitOfWork.Hotel.GetFirstAsync(c => c.Id == id);
-            //if (hotel == null)
-            //{
-            //    return BadRequest();
-            //}
-
-            //mapper.Map(hotelDto, hotel);
-
-            //try
-            //{
-            //    _unitOfWork.Hotel.Update(hotel);
-            //    await _unitOfWork.SaveAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!CountryExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
-
-            //return NoContent();
             try
             {
                 await _unitOfWork.Hotel.UpdateAsync(id, hotelDto);
@@ -117,16 +75,9 @@ namespace HotelHostingApi.Controllers
         
         public async Task<ActionResult<HotelDetailsDto>> PostHotel(CreateHotelDto hotelDto)
         {
-            //var hotel = mapper.Map<Hotel>(hotelDto);
-            //// _context.Countries.Add(country);
-
-            //_unitOfWork.Hotel.AddAsync(hotel);
-
-            //await _unitOfWork.SaveAsync();
-
-            //return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
+            
             var hotel = await _unitOfWork.Hotel.AddAsync<CreateHotelDto, HotelDetailsDto>(hotelDto);
-            return CreatedAtAction(nameof(GetHotel), new { id = hotel.Id }, hotel);
+            return CreatedAtAction(nameof(HotelDetailsDto), new { id = hotel.Id }, hotel);
         }
 
         // DELETE: api/Hotels/5
@@ -149,7 +100,6 @@ namespace HotelHostingApi.Controllers
 
         private bool HotelExists(int id)
         {
-            //return _context.Countries.Any(e => e.Id == id);
             return _unitOfWork.Hotel.Exists(id);
         }
     }
