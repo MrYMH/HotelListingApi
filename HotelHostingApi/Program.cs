@@ -1,5 +1,6 @@
 
 using HotelHostingApi.Configuration;
+using Microsoft.Extensions.Configuration;
 using HotelHostingApi.EF.Data;
 using HotelLisstingApi.Core.IRepositories;
 using HotelLisstingApi.Core.Models;
@@ -91,10 +92,15 @@ namespace HotelHostingApi
             builder.Services.AddScoped<IAuthManager, AuthManager>();
 
             //jwt settings
+            builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JWT"));
+
+
             builder.Services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // "Bearer"
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options => {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = false;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
