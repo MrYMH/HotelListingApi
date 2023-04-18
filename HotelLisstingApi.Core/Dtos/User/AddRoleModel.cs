@@ -7,15 +7,12 @@ using System.Threading.Tasks;
 
 namespace HotelLisstingApi.Core.Dtos.User
 {
-    public class ApiUserDto : LoginUserDto
+    public class AddRoleModel
     {
         [Required]
-        public string FirstName { get; set; }
+        public string UserId { get; set; }
 
         [Required]
-        public string LastName { get; set; }
-
-        [Required]
-        public string Username { get; set; }
+        public string Role { get; set; }
     }
 }

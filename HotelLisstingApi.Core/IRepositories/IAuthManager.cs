@@ -20,5 +20,7 @@ namespace HotelLisstingApi.Core.IRepositories
 
         //new implement
         Task<AuthModel> RegisterAsync(ApiUserDto userDto);
+        Task<AuthModel> GetTokenAsync(LoginUserDto model);
+        Task<string> AddRoleAsync(AddRoleModel model);
     }
 }
