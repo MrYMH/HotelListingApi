@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelLisstingApi.Core.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,6 +18,16 @@ namespace HotelLisstingApi.Core.IRepositories
         public Task AddAsync(T entity);
 
         bool Exists(int id);
+
+
+        //new implement
+        Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<T, bool>>? filter = null, string? includeprops = null);
+        Task<TResult> GetFirstAsync<TResult>(Expression<Func<T, bool>> filter = null, string? includeprops = null);
+
+        Task UpdateAsync<TSource>(int id, TSource source) where TSource : IBaseDto;
+        public Task<TResult> AddAsync<TSource ,TResult>(TSource source);
+
+        Task<List<TResult>> GetAllAsync2<TResult>();
 
     }
 }

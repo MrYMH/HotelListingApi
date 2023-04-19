@@ -2,7 +2,7 @@
 
 namespace HotelLisstingApi.Core.Dtos.Hotel
 {
-    public class HotelDetailsDto : BaseHotelDto
+    public class HotelDetailsDto : BaseHotelDto, IBaseDto
     {
         public int Id { get; set; }
         
