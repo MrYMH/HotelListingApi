@@ -20,7 +20,7 @@ namespace HotelListingApi.EF.Repositories
     {
         private readonly IMapper _mapper;
         private readonly UserManager<ApiUser> _userManager;
-        //private ApiUser _user;
+        
         private readonly IConfiguration _config;
        
 
