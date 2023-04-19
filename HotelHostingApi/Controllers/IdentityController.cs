@@ -35,7 +35,12 @@ namespace HotelHostingApi.Controllers
             return Ok(result);
         }
 
+<<<<<<< JWT_Authentication_new_branch
         // POST: api/Identity/refreshtoken
+=======
+<<<<<<< JWT_Authentication
+        // POST: api/Identity/login
+>>>>>>> master
         [HttpPost]
         [Route("refreshtoken")]
         public async Task<ActionResult> RefreshToken([FromBody] LoginUserDto request)
@@ -66,5 +71,8 @@ namespace HotelHostingApi.Controllers
 
             return Ok(model);
         }
+=======
+
+>>>>>>> master
     }
 }
