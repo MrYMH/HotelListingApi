@@ -21,19 +21,18 @@ namespace HotelHostingApi.Controllers
     [EnableQuery]
     public class CountriesController : ControllerBase
     {
-        private readonly IMapper mapper;
+        
         private readonly IUnitOfWork _unitOfWork;
 
-        public CountriesController(IMapper mapper , IUnitOfWork unitOfWork )
+        public CountriesController( IUnitOfWork unitOfWork )
         {
-            this.mapper = mapper;
             this._unitOfWork = unitOfWork;
         }
 
         // GET: api/Countries
         //Administrator
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
+        
         public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetCountries()
         {
             var records = await _unitOfWork.Country.GetAllAsync<GetCountryDto>();
@@ -42,6 +41,7 @@ namespace HotelHostingApi.Controllers
 
         // GET: api/Countries/1
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<CountryDetailsDto>> GetCountry(int? id)
         {
             var records = await _unitOfWork.Country.GetFirstAsync<CountryDetailsDto>(c => c.Id == id, "Hotels");
@@ -51,7 +51,7 @@ namespace HotelHostingApi.Controllers
         // PUT: api/Countries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutCountry(int id, GetCountryDto countryDto)
         {
             try
@@ -78,6 +78,7 @@ namespace HotelHostingApi.Controllers
         // POST: api/Countries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<GetCountryDto>> PostCountry(CreateCountryDto createCountryDto)
         {
             var record = await _unitOfWork.Country.AddAsync<CreateCountryDto , GetCountryDto>(createCountryDto);
@@ -89,10 +90,10 @@ namespace HotelHostingApi.Controllers
 
         // DELETE: api/Countries/5
         [HttpDelete("{id}")]
-        
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteCountry(int id)
         {
-            var country = await _unitOfWork.Country.GetFirstAsync(c => c.Id == id);
+            var country = await _unitOfWork.Country.GetFirstAsync<Country>(c => c.Id == id);
             if (country == null)
             {
                 return NotFound();

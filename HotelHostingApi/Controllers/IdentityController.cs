@@ -1,11 +1,14 @@
 ﻿using HotelLisstingApi.Core.Dtos.User;
 using HotelLisstingApi.Core.IRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace HotelHostingApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiVersion("1.0", Deprecated = true)]
     [ApiController]
     public class IdentityController : ControllerBase
     {
@@ -32,30 +35,9 @@ namespace HotelHostingApi.Controllers
             return Ok(result);
         }
 
-        //// POST: api/Identity/login
-        //[HttpPost]
-        //[Route("login")]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult> Login([FromBody] LoginUserDto loginDto)
-        //{
-        //    var authResponse = await _authManager.Login(loginDto);
-
-        //    if (authResponse == null)
-        //    {
-        //        return Unauthorized();
-        //    }
-
-        //    return Ok(authResponse);
-        //}
-
         // POST: api/Identity/refreshtoken
         [HttpPost]
         [Route("refreshtoken")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> RefreshToken([FromBody] LoginUserDto request)
         {
             if (!ModelState.IsValid)
@@ -71,6 +53,7 @@ namespace HotelHostingApi.Controllers
 
 
         [HttpPost("addrole")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> AddRoleAsync([FromBody] AddRoleModel model)
         {
             if (!ModelState.IsValid)
