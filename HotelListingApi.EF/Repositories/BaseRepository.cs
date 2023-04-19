@@ -27,81 +27,10 @@ namespace HotelListingApi.EF.Repositories
             _context = context;
             _mapper = mapper;
         }
-
-
-        public async Task AddAsync(T entity)
-        {
-            await _context.AddAsync(entity);
-        }
-
         public void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
         }
-
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeprops = null)
-        {
-            IQueryable<T> query = _context.Set<T>().AsQueryable();
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            if (includeprops != null)
-            {
-                foreach (var includeProp in includeprops.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProp);
-                }
-            }
-            return query.ToList();
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeprops = null)
-        {
-
-            IQueryable<T> query = _context.Set<T>().AsQueryable();
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            if (includeprops != null)
-            {
-                foreach (var includeProp in includeprops.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProp);
-                }
-            }
-            return await query.ToListAsync();
-        }
-
-        //public Task<T> GetFirstAsync(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public async Task<T> GetFirstAsync(Expression<Func<T, bool>> filter, string? includeprops = null)
-        {
-            
-             var dbset = _context.Set<T>().Where(filter);
-            if (includeprops != null)
-            {
-                foreach (var includeProp in includeprops.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    dbset = dbset.Include(includeProp);
-                }
-            }
-            return await dbset.FirstOrDefaultAsync();
-        }
-
-        
-
-        public void Update(T entity)
-        {
-            _context.Set<T>().Update(entity);
-        }
-
 
         public bool Exists(int id)
         {
@@ -134,7 +63,8 @@ namespace HotelListingApi.EF.Repositories
         }
 
 
-        //new implement
+
+
         public async Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<T, bool>> filter = null, string? includeprops = null)
         {
             var query = _context.Set<T>().AsQueryable();
@@ -197,12 +127,7 @@ namespace HotelListingApi.EF.Repositories
         }
 
 
-        public async Task<List<TResult>> GetAllAsync2<TResult>()
-        {
-            return await _context.Set<T>()
-                .ProjectTo<TResult>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-        }
+        
 
 
     }
