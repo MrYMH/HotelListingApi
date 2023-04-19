@@ -15,6 +15,7 @@ namespace HotelListingApi.EF.Repositories
 
         public ICountryRepository Country { get; private set; }
         public IHotelRepository Hotel { get; private set; }
+        //public IAuthManager User { get; private set; }
 
 
         public UnitOfWork(ApplicationDbContext context)
@@ -22,6 +23,7 @@ namespace HotelListingApi.EF.Repositories
             _context = context;
             Country = new CountryRepository(_context);
             Hotel = new HotelRepository(_context);
+            //User = new AuthManager(_context , );
         }
 
 

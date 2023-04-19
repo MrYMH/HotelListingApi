@@ -2,7 +2,9 @@
 using HotelHostingApi.Configuration;
 using HotelHostingApi.EF.Data;
 using HotelLisstingApi.Core.IRepositories;
+using HotelLisstingApi.Core.Models;
 using HotelListingApi.EF.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -19,6 +21,11 @@ namespace HotelHostingApi
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            //setup user identity
+            builder.Services.AddIdentityCore<ApiUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Add services to the container.
 
@@ -48,6 +55,8 @@ namespace HotelHostingApi
 
             //set repository pattern
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddScoped<IAuthManager, AuthManager>();
 
             var app = builder.Build();
 
