@@ -38,6 +38,7 @@ namespace HotelHostingApi.Controllers
             return Ok();
         }
 
+<<<<<<< JWT_Authentication
         // POST: api/Identity/login
         [HttpPost]
         [Route("login")]
@@ -73,5 +74,8 @@ namespace HotelHostingApi.Controllers
 
             return Ok(authResponse);
         }
+=======
+
+>>>>>>> master
     }
 }
