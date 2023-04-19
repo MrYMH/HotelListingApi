@@ -10,11 +10,13 @@ using HotelLisstingApi.Core.Dtos.Country;
 using HotelLisstingApi.Core.Models;
 using HotelHostingApi.EF.Data;
 using HotelLisstingApi.Core.IRepositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelHostingApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class CountriesController : ControllerBase
     {
         private readonly IMapper mapper;
@@ -53,6 +55,7 @@ namespace HotelHostingApi.Controllers
         // PUT: api/Countries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        
         public async Task<IActionResult> PutCountry(int id, GetCountryDto countryDto)
         {
 
@@ -94,6 +97,7 @@ namespace HotelHostingApi.Controllers
         // POST: api/Countries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        
         public async Task<ActionResult<Country>> PostCountry(CreateCountryDto createCountryDto)
         {
             var country = mapper.Map<Country>(createCountryDto);
@@ -111,6 +115,7 @@ namespace HotelHostingApi.Controllers
 
         // DELETE: api/Countries/5
         [HttpDelete("{id}")]
+        
         public async Task<IActionResult> DeleteCountry(int id)
         {
             var country = await _unitOfWork.Country.GetFirstAsync(c => c.Id == id);

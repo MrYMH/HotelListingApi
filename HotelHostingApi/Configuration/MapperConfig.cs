@@ -19,6 +19,7 @@ namespace HotelHostingApi.Configuration
 
             CreateMap<ApiUser, LoginUserDto>().ReverseMap();
             CreateMap<ApiUser, ApiUserDto>().ReverseMap();
+            CreateMap<ApiUser, AuthResponseDto>().ReverseMap();
 
         }
     }

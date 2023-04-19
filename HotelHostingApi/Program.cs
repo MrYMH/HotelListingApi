@@ -4,9 +4,12 @@ using HotelHostingApi.EF.Data;
 using HotelLisstingApi.Core.IRepositories;
 using HotelLisstingApi.Core.Models;
 using HotelListingApi.EF.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 
 namespace HotelHostingApi
 {
@@ -23,9 +26,16 @@ namespace HotelHostingApi
             });
 
             //setup user identity
-            builder.Services.AddIdentityCore<ApiUser>()
-                .AddRoles<IdentityRole>()
+            builder.Services.AddIdentity<ApiUser , IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+                
+
+            
+
+            //services.AddIdentity<User, UserRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
 
             // Add services to the container.
 
@@ -58,6 +68,24 @@ namespace HotelHostingApi
 
             builder.Services.AddScoped<IAuthManager, AuthManager>();
 
+            //jwt settings
+            builder.Services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // "Bearer"
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+                };
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -72,6 +100,8 @@ namespace HotelHostingApi
             app.UseHttpsRedirection();
 
             app.UseCors("AllowAll");
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
