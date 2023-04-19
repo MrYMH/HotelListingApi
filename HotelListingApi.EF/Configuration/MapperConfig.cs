@@ -4,7 +4,7 @@ using HotelLisstingApi.Core.Dtos.Hotel;
 using HotelLisstingApi.Core.Dtos.User;
 using HotelLisstingApi.Core.Models;
 
-namespace HotelHostingApi.Configuration
+namespace HotelHostingApi.EF.Configuration
 {
     public class MapperConfig :Profile
     {

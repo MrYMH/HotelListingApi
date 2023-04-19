@@ -31,7 +31,9 @@ namespace HotelHostingApi.Controllers
         }
 
         // GET: api/Countries
+        //Administrator
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<GetCountryDto>>> GetCountries()
         {
             var records = await _unitOfWork.Country.GetAllAsync<GetCountryDto>();
@@ -76,7 +78,6 @@ namespace HotelHostingApi.Controllers
         // POST: api/Countries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        
         public async Task<ActionResult<GetCountryDto>> PostCountry(CreateCountryDto createCountryDto)
         {
             var record = await _unitOfWork.Country.AddAsync<CreateCountryDto , GetCountryDto>(createCountryDto);

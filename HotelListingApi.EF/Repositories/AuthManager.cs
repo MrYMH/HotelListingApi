@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HotelHostingApi.Configuration;
+using HotelHostingApi.EF.Configuration;
 using HotelLisstingApi.Core.Dtos.User;
 using HotelLisstingApi.Core.IRepositories;
 using HotelLisstingApi.Core.Models;
@@ -20,125 +20,125 @@ namespace HotelListingApi.EF.Repositories
     {
         private readonly IMapper _mapper;
         private readonly UserManager<ApiUser> _userManager;
-        private ApiUser _user;
+        //private ApiUser _user;
         private readonly IConfiguration _config;
-        private readonly JwtConfig _jwtConfig;
+       
 
         private readonly RoleManager<IdentityRole> _roleManager;
 
         private const string _loginProvider = "HotelListingApi";
         private const string _refreshToken = "RefreshToken";
 
-        public AuthManager(IMapper mapper, UserManager<ApiUser> userManager , IConfiguration config , JwtConfig jwtConfig , RoleManager<IdentityRole> roleManager)
+        public AuthManager(IMapper mapper, UserManager<ApiUser> userManager , IConfiguration config , RoleManager<IdentityRole> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
             _config = config;
-            _jwtConfig = jwtConfig;
+            
             _roleManager= roleManager;
         }
 
-        public async Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto)
-        {
-            _user = _mapper.Map<ApiUser>(userDto);
-            _user.UserName = userDto.Email;
+        //public async Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto)
+        //{
+        //    _user = _mapper.Map<ApiUser>(userDto);
+        //    _user.UserName = userDto.Email;
 
-            var result = await _userManager.CreateAsync(_user, userDto.Password);
+        //    var result = await _userManager.CreateAsync(_user, userDto.Password);
 
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(_user, "User");
-            }
+        //    if (result.Succeeded)
+        //    {
+        //        await _userManager.AddToRoleAsync(_user, "User");
+        //    }
 
-            return result.Errors;
-        }
+        //    return result.Errors;
+        //}
 
-        public async Task<AuthResponseDto> Login(LoginUserDto loginDto)
-        {
-            _user = await _userManager.FindByEmailAsync(loginDto.Email);
-            bool isValidUser = await _userManager.CheckPasswordAsync(_user, loginDto.Password);
+        //public async Task<AuthResponseDto> Login(LoginUserDto loginDto)
+        //{
+        //    _user = await _userManager.FindByEmailAsync(loginDto.Email);
+        //    bool isValidUser = await _userManager.CheckPasswordAsync(_user, loginDto.Password);
 
-            if (_user == null || isValidUser == false)
-            {
-                return null;
-            }
+        //    if (_user == null || isValidUser == false)
+        //    {
+        //        return null;
+        //    }
 
-            var token = await GenerateToken();
-            return new AuthResponseDto
-            {
-                Token = token,
-                UserId = _user.Id
-            };
+        //    var token = await GenerateToken();
+        //    return new AuthResponseDto
+        //    {
+        //        Token = token,
+        //        UserId = _user.Id
+        //    };
 
-        }
+        //}
 
-        private async Task<string> GenerateToken()
-        {
-            var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]));
+        //private async Task<string> GenerateToken()
+        //{
+        //    var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]));
 
-            var credentials = new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha256);
+        //    var credentials = new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha256);
 
-            var roles = await _userManager.GetRolesAsync(_user);
-            var roleClaims = roles.Select(x => new Claim(ClaimTypes.Role, x)).ToList();
-            var userClaims = await _userManager.GetClaimsAsync(_user);
+        //    var roles = await _userManager.GetRolesAsync(_user);
+        //    var roleClaims = roles.Select(x => new Claim(ClaimTypes.Role, x)).ToList();
+        //    var userClaims = await _userManager.GetClaimsAsync(_user);
 
-            var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, _user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, _user.Email),
-                new Claim("uid", _user.Id),
-            }
-            .Union(userClaims).Union(roleClaims);
+        //    var claims = new List<Claim>
+        //    {
+        //        new Claim(JwtRegisteredClaimNames.Sub, _user.Email),
+        //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        //        new Claim(JwtRegisteredClaimNames.Email, _user.Email),
+        //        new Claim("uid", _user.Id),
+        //    }
+        //    .Union(userClaims).Union(roleClaims);
 
-            var token = new JwtSecurityToken(
-                issuer: _config["JwtSettings:Issuer"],
-                audience: _config["JwtSettings:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToInt32(_config["JwtSettings:DurationInMinutes"])),
-                signingCredentials: credentials
-                );
+        //    var token = new JwtSecurityToken(
+        //        issuer: _config["JwtSettings:Issuer"],
+        //        audience: _config["JwtSettings:Audience"],
+        //        claims: claims,
+        //        expires: DateTime.Now.AddMinutes(Convert.ToInt32(_config["JwtSettings:DurationInMinutes"])),
+        //        signingCredentials: credentials
+        //        );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //}
 
-        public async Task<string> CreateRefreshTocken()
-        {
-            await _userManager.RemoveAuthenticationTokenAsync(_user, _loginProvider, _refreshToken);
-            var newRefreshToken = await _userManager.GenerateUserTokenAsync(_user, _loginProvider, _refreshToken);
-            var result = await _userManager.SetAuthenticationTokenAsync(_user, _loginProvider, _refreshToken, newRefreshToken);
-            return newRefreshToken;
-        }
+        //public async Task<string> CreateRefreshTocken()
+        //{
+        //    await _userManager.RemoveAuthenticationTokenAsync(_user, _loginProvider, _refreshToken);
+        //    var newRefreshToken = await _userManager.GenerateUserTokenAsync(_user, _loginProvider, _refreshToken);
+        //    var result = await _userManager.SetAuthenticationTokenAsync(_user, _loginProvider, _refreshToken, newRefreshToken);
+        //    return newRefreshToken;
+        //}
 
-        public async Task<AuthResponseDto> VerifyRefreshTocken(AuthResponseDto request)
-        {
-            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-            var tokenContent = jwtSecurityTokenHandler.ReadJwtToken(request.Token);
-            var username = tokenContent.Claims.ToList().FirstOrDefault(q => q.Type == JwtRegisteredClaimNames.Email)?.Value;
-            _user = await _userManager.FindByNameAsync(username);
+        //public async Task<AuthResponseDto> VerifyRefreshTocken(AuthResponseDto request)
+        //{
+        //    var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+        //    var tokenContent = jwtSecurityTokenHandler.ReadJwtToken(request.Token);
+        //    var username = tokenContent.Claims.ToList().FirstOrDefault(q => q.Type == JwtRegisteredClaimNames.Email)?.Value;
+        //    _user = await _userManager.FindByNameAsync(username);
 
-            if (_user == null || _user.Id != request.UserId)
-            {
-                return null;
-            }
+        //    if (_user == null || _user.Id != request.UserId)
+        //    {
+        //        return null;
+        //    }
 
-            var isValidRefreshToken = await _userManager.VerifyUserTokenAsync(_user,
-                _loginProvider, _refreshToken, request.RefreshToken);
+        //    var isValidRefreshToken = await _userManager.VerifyUserTokenAsync(_user,
+        //        _loginProvider, _refreshToken, request.RefreshToken);
 
-            if (isValidRefreshToken)
-            {
-                var token = await GenerateToken();
-                return new AuthResponseDto
-                {
-                    Token = token,
-                    UserId = _user.Id,
-                    RefreshToken = await CreateRefreshTocken()
-                };
-            }
+        //    if (isValidRefreshToken)
+        //    {
+        //        var token = await GenerateToken();
+        //        return new AuthResponseDto
+        //        {
+        //            Token = token,
+        //            UserId = _user.Id,
+        //            RefreshToken = await CreateRefreshTocken()
+        //        };
+        //    }
 
-            await _userManager.UpdateSecurityStampAsync(_user);
-            return null;
-        }
+        //    await _userManager.UpdateSecurityStampAsync(_user);
+        //    return null;
+        //}
 
 
         //new implement
@@ -251,15 +251,15 @@ namespace HotelListingApi.EF.Repositories
             .Union(userClaims)
             .Union(roleClaims);
 
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.Key));
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
 
             var jwtSecurityToken = new JwtSecurityToken(
-                issuer: _jwtConfig.Issuer,
-                audience: _jwtConfig.Audience,
+                issuer: _config["JWT:Issuer"],
+                audience: _config["JWT:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddDays(_jwtConfig.DurationInDays),
+                expires: DateTime.Now.AddDays(Convert.ToInt32(_config["JWT:DurationInDays"])),
                 signingCredentials: signingCredentials);
 
             return jwtSecurityToken;

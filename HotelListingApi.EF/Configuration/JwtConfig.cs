@@ -1,4 +1,4 @@
-﻿namespace HotelHostingApi.Configuration
+﻿namespace HotelHostingApi.EF.Configuration
 {
     public class JwtConfig
     {

@@ -10,13 +10,13 @@ namespace HotelLisstingApi.Core.IRepositories
 {
     public interface IAuthManager
     {
-        Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto);
+        //Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto);
 
-        Task<AuthResponseDto> Login(LoginUserDto userDto);
+        //Task<AuthResponseDto> Login(LoginUserDto userDto);
 
-        Task<string> CreateRefreshTocken();
+        //Task<string> CreateRefreshTocken();
 
-        Task<AuthResponseDto> VerifyRefreshTocken(AuthResponseDto request);
+        //Task<AuthResponseDto> VerifyRefreshTocken(AuthResponseDto request);
 
         //new implement
         Task<AuthModel> RegisterAsync(ApiUserDto userDto);
