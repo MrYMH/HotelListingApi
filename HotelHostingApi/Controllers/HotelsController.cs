@@ -18,12 +18,12 @@ namespace HotelHostingApi.Controllers
     [EnableQuery]
     public class HotelsController : ControllerBase
     {
-        private readonly IMapper mapper;
+        
         private readonly IUnitOfWork _unitOfWork;
 
-        public HotelsController(IMapper mapper, IUnitOfWork unitOfWork)
+        public HotelsController(IUnitOfWork unitOfWork)
         {
-            this.mapper = mapper;
+            
             _unitOfWork = unitOfWork;
         }
 
@@ -37,6 +37,7 @@ namespace HotelHostingApi.Controllers
 
         // GET: api/Hotels/1
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<HotelDetailsDto>> GetHotel(int id)
         {
             var result = await _unitOfWork.Hotel.GetFirstAsync<HotelDetailsDto>(c => c.Id == id);
@@ -46,7 +47,7 @@ namespace HotelHostingApi.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutHotel(int id, HotelDetailsDto hotelDto)
         {
             try
@@ -72,7 +73,7 @@ namespace HotelHostingApi.Controllers
         // POST: api/Hotels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<HotelDetailsDto>> PostHotel(CreateHotelDto hotelDto)
         {
             
@@ -82,10 +83,10 @@ namespace HotelHostingApi.Controllers
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
-        
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
-            var hotel = await _unitOfWork.Hotel.GetFirstAsync(c => c.Id == id);
+            var hotel = await _unitOfWork.Hotel.GetFirstAsync<Hotel>(c => c.Id == id);
             if (hotel == null)
             {
                 return NotFound();

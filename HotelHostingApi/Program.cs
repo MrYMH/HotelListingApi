@@ -1,5 +1,6 @@
 
-using HotelHostingApi.Configuration;
+//using HotelHostingApi.EF.Configuration;
+using HotelHostingApi.EF.Configuration;
 using HotelHostingApi.EF.Data;
 using HotelLisstingApi.Core.IRepositories;
 using HotelLisstingApi.Core.Models;
@@ -91,10 +92,15 @@ namespace HotelHostingApi
             builder.Services.AddScoped<IAuthManager, AuthManager>();
 
             //jwt settings
+            //builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JWT"));
+
+
             builder.Services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // "Bearer"
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options => {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = false;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -102,11 +108,12 @@ namespace HotelHostingApi
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
-                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
                 };
             });
+
 
             //Set Response Cashing
             builder.Services.AddResponseCaching(options =>
