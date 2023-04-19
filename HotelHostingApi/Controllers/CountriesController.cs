@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HotelHostingApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/countries")]
+    [ApiVersion("1.0", Deprecated = true)]
     [ApiController]
-    
     public class CountriesController : ControllerBase
     {
         private readonly IMapper mapper;
