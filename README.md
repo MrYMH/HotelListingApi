@@ -27,3 +27,13 @@ The API provides the following endpoints:
 * **'DELETE /countries/{id}'**: Deletes a country.
 
 To use the API, send a request to one of the endpoints using your preferred HTTP client (e.g. Postman). The request and response formats are in JSON.
+
+## Authentication
+The API requires an API key to access. To obtain an API key, please contact the project maintainers.
+
+## Contributing
+
+We welcome contributions from the community! If you find a bug or have an idea for a new feature, please open an issue on the Github repository.
+
+## Contact Information
+If you have any questions or issues, please contact the project maintainers at **'youssefhemdan02@gmail.com'**.
