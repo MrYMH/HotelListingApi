@@ -11,3 +11,19 @@ To install and run the project, follow these steps:
 3. Restore the NuGet packages by running the **dotnet restore** command.
 4. Build the project by running the **dotnet build** command.
 5. Run the project by running the **dotnet run** command.
+
+## Usage
+The API provides the following endpoints:
+
+* **'GET /hotels'**: Retrieves a list of all hotels.
+* **'GET /hotels/{id}'**: Retrieves information about a specific hotel.
+* **'POST /hotels'**: Creates a new hotel.
+* **'PUT /hotels/{id}'**: Updates an existing hotel.
+* **'DELETE /hotels/{id}'**: Deletes a hotel.
+* **'GET /countries'**: Retrieves a list of all countries.
+* **'GET /countries/{id}'**: Retrieves information about a specific country.
+* **'POST /countries'**: Creates a new country.
+* **'PUT /countries/{id}'**: Updates an existing country.
+* **'DELETE /countries/{id}'**: Deletes a country.
+
+To use the API, send a request to one of the endpoints using your preferred HTTP client (e.g. Postman). The request and response formats are in JSON.
