@@ -31,6 +31,12 @@ To use the API, send a request to one of the endpoints using your preferred HTTP
 ## Authentication
 The API requires an API key to access. To obtain an API key, please contact the project maintainers.
 
+## Future Plans
+* API Documentation
+* Enhance Search Functionality, so The API should allow you to search for hotels based on your preferred location, date, and price range.
+* Provie more Accurate Information including room types, amenities, pricing, and availability.
+* Allow Reviews and Ratings Functionality.
+
 ## Contributing
 
 We welcome contributions from the community! If you find a bug or have an idea for a new feature, please open an issue on the Github repository.
