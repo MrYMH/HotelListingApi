@@ -2,7 +2,7 @@
 
 This project is a hotel listing API that allows users to search and retrieve information about hotels and countries. The API is built using C# and .NET Core 7.
 
-##Installation
+## Installation
 
 To install and run the project, follow these steps:
 
